@@ -1,0 +1,10 @@
+.navbar-nav .nav-item .user-img {
+    height: auto;
+    width: 2.1rem;
+    margin-top: -7px;
+}
+
+.navbar-nav .nav-item .user-info {
+    color: #6c757d !important;
+    margin-left: 5px;
+}
