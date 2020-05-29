@@ -15,3 +15,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')
     ->name('home');
+
+Route::get('/login', function() {
+    return view('pages.login');
+});
+
+Route::get('/suratmasuk/input', 'SuratMasukController@input')
+    ->name('input-surat-masuk');
+
+Route::post('/suratmasuk/create', 'SuratMasukController@create')
+    ->name('create-surat-masuk');
+
+//Auth::routes(['verify' => true]);
