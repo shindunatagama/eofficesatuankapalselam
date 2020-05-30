@@ -9,9 +9,7 @@
     margin-left: 5px;
 }
 
-label .custom-file-label {
-    height: 35px;
-    margin-left: 7.5px;
-    margin-right: 7.5px;
-    padding-left: 7.5px;
+.custom-file-label,
+.custom-file-label::after {
+    color: #98a0a8
 }

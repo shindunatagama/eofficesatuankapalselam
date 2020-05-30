@@ -44,32 +44,39 @@ Input Surat Masuk
                   <div class="form-group row">
                     <label for="terima-dari" class="col-sm-2 col-form-label">Terima Dari</label>
                     <div class="col-sm-10">
-                      <input type="text" name="terima_dari" class="form-control form-control-sm" id="terima-dari" placeholder="Terima Dari">
+                      <input type="text" name="terima_dari" class="form-control" id="terima-dari" placeholder="Terima Dari">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="nomor-surat" class="col-sm-2 col-form-label">Nomor Surat</label>
                     <div class="col-sm-10">
-                      <input type="text" name="nomor_surat" class="form-control form-control-sm" id="nomor-surat" placeholder="Nomor Surat">
+                      <input type="text" name="nomor_surat" class="form-control" id="nomor-surat" placeholder="Nomor Surat">
                     </div>
 									</div>
 									<div class="form-group row">
                     <label for="tanggal-surat" class="col-sm-2 col-form-label">Tanggal Surat</label>
                     <div class="col-sm-10">
-                      <input type="text" name="tanggal_surat" class="form-control form-control-sm" id="tanggal-surat" placeholder="Tanggal Surat">
+                      <div class="input-group date" id="tanggal-surat" data-target-input="nearest" style="width: 35%;">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#tanggal-surat"/>
+                        <div class="input-group-append" data-target="#tanggal-surat" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                      </div>
                     </div>
 									</div>
 									<div class="form-group row">
                     <label for="perihal-surat" class="col-sm-2 col-form-label">Perihal</label>
                     <div class="col-sm-10">
-                      <input type="text" name="perihal_surat" class="form-control form-control-sm" id="perihal-surat" placeholder="Perihal">
+                      <input type="text" name="perihal_surat" class="form-control" id="perihal-surat" placeholder="Perihal">
                     </div>
 									</div>
 									<div class="form-group row">
                     <label for="file-surat" class="col-sm-2 col-form-label">File</label>
-                    <div class="col-sm-10 myfilelabel">
-											<input type="file" name="file_surat" class="custom-file-input" id="file-surat" style="height: 33px !important;">
-											<label class="custom-file-label" for="file-surat" style="height: 35px;margin-left: 7.5px;margin-right: 7.5px;padding-left: 7.5px;color: #98a0a8">Pilih File</label>
+                    <div class="col-sm-10">
+                      <div class="custom-file">
+											  <input type="file" name="file_surat" class="custom-file-input" id="file-surat">
+                        <label class="custom-file-label" for="file-surat">Pilih File</label>
+                      </div>
 										</div>
 									</div>
                 </div>
@@ -88,3 +95,29 @@ Input Surat Masuk
 </div>
 <!-- /.content-wrapper -->
 @endsection
+
+@push('addon-style')
+<!-- Tempusdominus Bbootstrap 4 -->
+<link rel="stylesheet" href="{{ url('adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+@endpush
+
+@push('addon-script')
+<!-- bs-custom-file-input -->
+<script src="{{ url('adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script src="{{ url('adminlte/plugins/moment/moment.min.js') }}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{{ url('adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+@endpush
+
+@push('addon-script')
+<script type="text/javascript">
+  $(document).ready(function () {
+    bsCustomFileInput.init();
+
+    //Date range picker
+    $('#tanggal-surat').datetimepicker({
+        format: 'L'
+    });
+  });
+</script>
+@endpush
