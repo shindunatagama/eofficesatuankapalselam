@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Pendaftaran Pengguna</title>
+  <title>Lupa Password Pengguna</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -39,53 +39,28 @@
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
-	@endif
+  @endif
+  
+  @if (Session::has('flashmsgsucc'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <p>{{ Session::get('flashmsgsucc') }}</p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>  
+  @endif
 
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Pendaftaran Pengguna</p>
+      <p class="login-box-msg">Reset Password</p>
 
-			<form action="{{ route('register') }}" method="post" enctype="multipart/form-data">
+			<form action="{{ route('reset-password-pengguna') }}" method="post">
 				@csrf
 
 				<div class="form-group">
-					<label for="photo">Foto</label>
-					<div class="custom-file">
-						<input type="file" name="photo" class="custom-file-input" id="photo" onchange="readURL(this);" autofocus>
-						<label class="custom-file-label" for="file-surat">Pilih Foto</label>
-					</div>
-					<code>Ukuran Maksimal : 5 KB</code>
-				</div>
-				<div class="form-group">
-					<img class="profile-user-img img-fluid img-circle" id="upload-image" style="display: none;"
-						src="#" alt="User profile picture">
-				</div>
-				<div class="form-group">
-					<label for="name">Nama</label>
-					<input type="text" name="name" value="{{ old('name') }}" id="name" class="form-control" placeholder="Nama">
-				</div>
-				<div class="form-group">
-					<label for="rank">Pangkat</label>
-					<input type="text" name="rank" value="{{ old('rank') }}" id="rank" class="form-control" placeholder="Pangkat">
-				</div>
-				<div class="form-group">
-					<label for="username">Username</label>
-					<input type="text" name="username" value="{{ old('username') }}" id="username" class="form-control" placeholder="Username">
-				</div>
-				<div class="form-group">
-					<label for="email">Email</label>
-					<input type="email" name="email" value="{{ old('email') }}" id="email" class="form-control" placeholder="Email">
-				</div>
-				<div class="form-group">
-					<label for="roles">Hak Akses</label>
-					<select name="roles" class="form-control">
-						<option value="STAFF" {{ old('roles') == "STAFF" ? "selected" : "" }}>Staff</option>
-						<option value="SEKRETARIS" {{ old('roles') == "SEKRETARIS" ? "selected" : "" }}>Sekretaris</option>
-						<option value="SUPERVISOR" {{ old('roles') == "SUPERVISOR" ? "selected" : "" }}>Supervisor</option>
-						<option value="PIMPINAN" {{ old('roles') == "PIMPINAN" ? "selected" : "" }}>Pimpinan</option>
-						<option value="ADMIN" {{ old('roles') == "ADMIN" ? "selected" : "" }}>Admin</option>
-					</select>
+					<label for="useremail">Username atau Email</label>
+					<input type="text" name="useremail" value="{{ old('useremail') }}" id="useremail" class="form-control" placeholder="User atau Email">
 				</div>
 				<div class="form-group">
 					<label for="password">Password</label>
@@ -97,8 +72,8 @@
 				</div>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-2">
-							<button type="submit" class="btn btn-primary btn-block">Daftar</button>
+						<div class="col-4">
+							<button type="submit" class="btn btn-primary btn-block">Reset Password</button>
 						</div>
 						<div class="col-2">
 							<a href="{{ route('home') }}">

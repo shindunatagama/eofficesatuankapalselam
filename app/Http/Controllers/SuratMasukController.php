@@ -15,4 +15,19 @@ class SuratMasukController extends Controller
     {
         
     }
+
+    public function persetujuan()
+    {
+        return view('pages.surat-masuk.persetujuan');
+    }
+
+    public function disposisi()
+    {
+        return view('pages.surat-masuk.disposisi');
+    }
+
+    public function daftar()
+    {
+        return view('pages.surat-masuk.daftar');
+    }
 }

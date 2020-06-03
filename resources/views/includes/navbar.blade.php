@@ -12,23 +12,23 @@
 		<!-- User image -->
 		<li class="nav-item dropdown">
 			<a class="nav-link" data-toggle="dropdown" href="#">
-				<img src="{{ url('adminlte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2 user-img" alt="User Image">
-				<span class="d-none d-md-inline user-info">Shindu Nata Gama</span>
+				<img src="{{ Storage::url(Auth::user()->photo) }}" class="img-circle elevation-2 user-img" alt="User Image">
+				<span class="d-none d-md-inline user-info">{{ Auth::user()->name }}</span>
 			</a>
 			<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 				<span class="dropdown-item dropdown-header">
-					Shindu Nata Gama
+					{{ Auth::user()->name }}
 					<br />
-					<span class="text-xs">Laksamana Jendral</span>
+					<span class="text-xs">{{ Auth::user()->rank }}</span>
 				</span>
 				<div class="dropdown-divider"></div>
 				<div class="dropdown-item">
 					<i class="fas fa-user-tag mr-2"></i> Hak Akses
-					<span class="float-right text-muted text-sm">Admin</span>
+					<span class="float-right text-muted text-sm">{{ Auth::user()->roles }}</span>
 				</div>
 				<div class="dropdown-divider"></div>
 				<div class="dropdown-item">
-					<a href="#" class="btn btn-default btn-flat">Profil</a>
+					<a href="{{ route('profil-pengguna', Auth::user()->username) }}" class="btn btn-default btn-flat">Profil</a>
 					<a href="#" class="float-right btn btn-default btn-flat" data-toggle="modal" data-target="#modal-logout">Keluar</a>
 				</div>
 			</div>
@@ -50,8 +50,12 @@
 				<p>Anda yakin ingin logout?</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Kembali</button>
-				<button type="button" class="btn btn-primary">Logout</button>
+				<form action="{{ url('logout') }}" method="POST">
+					@csrf
+					
+					<button type="button" class="btn btn-default" data-dismiss="modal">Kembali</button>
+					<button type="submit" class="btn btn-primary">Logout</button>
+				</form>
 			</div>
 		</div>
 		<!-- /.modal-content -->
