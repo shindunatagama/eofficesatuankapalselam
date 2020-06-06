@@ -19,13 +19,13 @@
     </a>
     <ul class="nav nav-treeview">
       <li class="nav-item">
-        <a href="{{ route('daftar-surat-masuk') }}" class="nav-link {{ (Request::segment(1) == 'suratmasuk' && Request::segment(2) == 'daftar') ? 'active' : '' }}">
+        <a href="{{ route('daftar-surat-masuk') }}" class="nav-link {{ (Request::segment(1) == 'suratmasuk' && in_array(Request::segment(2), ['daftar', 'detail'])) ? 'active' : '' }}">
           <i class="far fa-circle nav-icon"></i>
           <p>Daftar</p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ route('input-surat-masuk') }}" class="nav-link {{ (Request::segment(1) == 'suratmasuk' && Request::segment(2) == 'input') ? 'active' : '' }}">
+        <a href="{{ route('input-surat-masuk') }}" class="nav-link {{ (Request::segment(1) == 'suratmasuk' && Request::segment(2) == 'add') ? 'active' : '' }}">
           <i class="far fa-circle nav-icon"></i>
           <p>Input</p>
         </a>
