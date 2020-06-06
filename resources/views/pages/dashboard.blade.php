@@ -36,7 +36,7 @@ Dashboard
 
             <div class="info-box-content">
               <span class="info-box-text">Surat Masuk</span>
-              <span class="info-box-number">100</span>
+              <span class="info-box-number">{{ count($suratMasuk) }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -49,7 +49,7 @@ Dashboard
 
             <div class="info-box-content">
               <span class="info-box-text">Disposisi</span>
-              <span class="info-box-number">35</span>
+              <span class="info-box-number">{{ count($disposisi) }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -66,7 +66,7 @@ Dashboard
 
             <div class="info-box-content">
               <span class="info-box-text">Pengguna</span>
-              <span class="info-box-number">50</span>
+              <span class="info-box-number">{{ count($users) }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -100,7 +100,6 @@ Dashboard
                 <table class="table m-0">
                   <thead>
                   <tr>
-                    <th>ID</th>
                     <th>Nomor Surat</th>
                     <th>Penginput</th>
                     <th>Waktu Input</th>
@@ -108,69 +107,30 @@ Dashboard
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                    <td>Call of Duty IV</td>
-                    <td>Shindu Nata Gama</td>
-                    <td>
-                      <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                    </td>
-                    <td><span class="badge badge-success">Shipped</span></td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                    <td>Samsung Smart TV</td>
-                    <td>Shindu Nata Gama</td>
-                    <td>
-                      <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                    </td>
-                    <td><span class="badge badge-warning">Pending</span></td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                    <td>iPhone 6 Plus</td>
-                    <td>Shindu Nata Gama</td>
-                    <td>
-                      <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                    </td>
-                    <td><span class="badge badge-danger">Delivered</span></td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                    <td>Samsung Smart TV</td>
-                    <td>Shindu Nata Gama</td>
-                    <td>
-                      <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                    </td>
-                    <td><span class="badge badge-info">Processing</span></td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                    <td>Samsung Smart TV</td>
-                    <td>Shindu Nata Gama</td>
-                    <td>
-                      <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                    </td>
-                    <td><span class="badge badge-warning">Pending</span></td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                    <td>iPhone 6 Plus</td>
-                    <td>Shindu Nata Gama</td>
-                    <td>
-                      <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                    </td>
-                    <td><span class="badge badge-danger">Delivered</span></td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                    <td>Call of Duty IV</td>
-                    <td>Shindu Nata Gama</td>
-                    <td>
-                      <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                    </td>
-                    <td><span class="badge badge-success">Shipped</span></td>
-                  </tr>
+                    @forelse ($mails as $mail)
+                    <tr>
+                      <td>{{ $mail->nomor_surat }}</td>
+                      <td>{{ $mail->user_penerima }}</td>
+                      <td>{{ $mail->created_at }}</td>
+                      <td>
+                        @if ($mail->status == 'PENDING')
+                        <span class="badge badge-warning">{{ $mail->status }}</span>
+                        @elseif ($mail->status == 'APPROVED')
+                        <span class="badge badge-success">{{ $mail->status }}</span>
+                        @elseif ($mail->status == 'REJECTED')
+                        <span class="badge badge-danger">{{ $mail->status }}</span>
+                        @elseif ($mail->status == 'DISPOSITION')
+                        <span class="badge badge-info">{{ $mail->status }}</span>   
+                        @endif
+                      </td>
+                    </tr>
+                    @empty
+                    <tr>
+                      <td colspan="4" class="text-center">
+                        Data Kosong
+                      </td>
+                    </tr>
+                    @endforelse
                   </tbody>
                 </table>
               </div>
@@ -178,8 +138,8 @@ Dashboard
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-              <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Input Surat masuk</a>
-              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Lihat Daftar Surat Masuk</a>
+              <a href="{{ route('input-surat-masuk') }}" class="btn btn-sm btn-info float-left">Input Surat masuk</a>
+              <a href="{{ route('daftar-surat-masuk') }}" class="btn btn-sm btn-secondary float-right">Lihat Daftar Surat Masuk</a>
             </div>
             <!-- /.card-footer -->
           </div>
