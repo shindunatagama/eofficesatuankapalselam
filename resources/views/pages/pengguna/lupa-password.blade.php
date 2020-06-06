@@ -52,15 +52,14 @@
 
   <!-- /.login-logo -->
   <div class="card">
-    <div class="card-body login-card-body">
-      <p class="login-box-msg">Reset Password</p>
+		<form action="{{ route('reset-password-pengguna') }}" method="post">
+			@csrf
 
-			<form action="{{ route('reset-password-pengguna') }}" method="post">
-				@csrf
-
+			<div class="card-body login-card-body">
+				<p class="login-box-msg">Reset Password</p>
 				<div class="form-group">
 					<label for="useremail">Username atau Email</label>
-					<input type="text" name="useremail" value="{{ old('useremail') }}" id="useremail" class="form-control" placeholder="User atau Email">
+					<input type="text" name="useremail" value="{{ old('useremail') }}" id="useremail" class="form-control" placeholder="Username atau Email">
 				</div>
 				<div class="form-group">
 					<label for="password">Password</label>
@@ -70,6 +69,20 @@
 					<label for="password-confirm">Konfirmasi Password</label>
 					<input type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" id="password-confirm" class="form-control" placeholder="Konfirmasi Password">
 				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-2">
+							<input type="text" name="captcha" id="captcha" class="form-control" placeholder="Captcha" autocomplete="off">
+						</div>
+						<div class="col-4" id="captcha-image">
+							<span>{!! captcha_img() !!}</span>
+							<button type="button" class="btn btn-default"><i class="fas fa-sync-alt" id="refresh-captcha"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.login-card-body -->
+			<div class="card-footer">
 				<div class="form-group">
 					<div class="row">
 						<div class="col-4">
@@ -82,9 +95,8 @@
 						</div>
 					</div>
 				</div>
-      </form>
-    </div>
-    <!-- /.login-card-body -->
+			</div>
+		</form>
   </div>
 </div>
 <!-- /.login-box -->
@@ -117,6 +129,17 @@ function readURL(input) {
 		document.getElementById('upload-image').style.display = '';
 	}
 }
+
+// Refresh captcha image
+$('#refresh-captcha').click(function() {
+	$.ajax({
+		type: 'GET',
+		url: '{{ route('refresh-captcha') }}',
+		success: function(data) {
+			$('#captcha-image span').html(data.captcha);
+		}
+	});
+});
 </script>
 
 </body>

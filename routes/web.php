@@ -80,10 +80,10 @@ Route::post('/pengguna/updateprofil', 'PenggunaController@updateProfil')
     ->name('update-profil')
     ->middleware(['auth', 'activeuser']);
 
-Route::get('/pengguna/lupapassword', 'PenggunaController@lupaPassword')
+Route::get('/pengguna/lupa-password', 'PenggunaController@lupaPassword')
     ->name('lupa-password-pengguna');
 
-Route::post('/pengguna/resetpassword', 'PenggunaController@resetPassword')
+Route::post('/pengguna/reset-password', 'PenggunaController@resetPassword')
     ->name('reset-password-pengguna');
 
 Route::get('/pengguna/pemeliharaan', 'PenggunaController@pemeliharaan')
@@ -102,5 +102,8 @@ Route::get('/pengguna/detail/{username}', 'PenggunaController@detail')
     ->name('detail-pengguna')
     ->middleware(['auth', 'activeuser']);
 /*--- End Pengguna ---*/
+
+Route::get('/refresh-captcha', 'CaptchaController@refreshCaptcha')
+    ->name('refresh-captcha');
 
 Auth::routes();

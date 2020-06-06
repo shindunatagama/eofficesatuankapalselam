@@ -24,7 +24,7 @@
 <div class="login-box" style="width: 650px;">
   <div class="login-logo">
 		<a href="{{ route('home') }}">
-			<img src="{{ url('adminlte/dist/img/logo-satuan-kapal-selam.png') }}" alt="AdminLTE Logo" class="img-circle" style="opacity: .8;height: 200px">
+			<img src="{{ url('adminlte/dist/img/logo-satuan-kapal-selam.png') }}" alt="AdminLTE Logo" class="img-circle" style="opacity: .8;height: 200px"/>
 		</a>
 	</div>
 
@@ -43,12 +43,11 @@
 
   <!-- /.login-logo -->
   <div class="card">
-    <div class="card-body login-card-body">
-      <p class="login-box-msg">Pendaftaran Pengguna</p>
+		<form action="{{ route('register') }}" method="post" enctype="multipart/form-data">
+			@csrf
 
-			<form action="{{ route('register') }}" method="post" enctype="multipart/form-data">
-				@csrf
-
+			<div class="card-body login-card-body">
+				<p class="login-box-msg">Pendaftaran Pengguna</p>
 				<div class="form-group">
 					<label for="photo">Foto</label>
 					<div class="custom-file">
@@ -78,13 +77,13 @@
 					<input type="email" name="email" value="{{ old('email') }}" id="email" class="form-control" placeholder="Email">
 				</div>
 				<div class="form-group">
-					<label for="roles">Hak Akses</label>
-					<select name="roles" class="form-control">
-						<option value="STAFF" {{ old('roles') == "STAFF" ? "selected" : "" }}>Staff</option>
-						<option value="SEKRETARIS" {{ old('roles') == "SEKRETARIS" ? "selected" : "" }}>Sekretaris</option>
-						<option value="SUPERVISOR" {{ old('roles') == "SUPERVISOR" ? "selected" : "" }}>Supervisor</option>
-						<option value="PIMPINAN" {{ old('roles') == "PIMPINAN" ? "selected" : "" }}>Pimpinan</option>
-						<option value="ADMIN" {{ old('roles') == "ADMIN" ? "selected" : "" }}>Admin</option>
+					<label for="role">Hak Akses</label>
+					<select name="role" class="form-control">
+						<option value="STAFF" {{ old('role') == "STAFF" ? "selected" : "" }}>Staff</option>
+						<option value="SEKRETARIS" {{ old('role') == "SEKRETARIS" ? "selected" : "" }}>Sekretaris</option>
+						<option value="SUPERVISOR" {{ old('role') == "SUPERVISOR" ? "selected" : "" }}>Supervisor</option>
+						<option value="PIMPINAN" {{ old('role') == "PIMPINAN" ? "selected" : "" }}>Pimpinan</option>
+						<option value="ADMIN" {{ old('role') == "ADMIN" ? "selected" : "" }}>Admin</option>
 					</select>
 				</div>
 				<div class="form-group">
@@ -98,7 +97,21 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-2">
-							<button type="submit" class="btn btn-primary btn-block">Daftar</button>
+							<input type="text" name="captcha" id="captcha" class="form-control" placeholder="Captcha" autocomplete="off">
+						</div>
+						<div class="col-4" id="captcha-image">
+							<span>{!! captcha_img() !!}</span>
+							<button type="button" class="btn btn-default"><i class="fas fa-sync-alt" id="refresh-captcha"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.login-card-body -->
+			<div class="card-footer">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-2">
+							<button type="submit" class="btn btn-block bg-gradient-primary">Daftar</button>
 						</div>
 						<div class="col-2">
 							<a href="{{ route('home') }}">
@@ -107,9 +120,8 @@
 						</div>
 					</div>
 				</div>
-      </form>
-    </div>
-    <!-- /.login-card-body -->
+			</div>
+		</form>
   </div>
 </div>
 <!-- /.login-box -->
@@ -129,6 +141,7 @@ $(document).ready(function () {
 	bsCustomFileInput.init();
 });
 
+// Show foto after uploading
 function readURL(input) {
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
@@ -142,6 +155,17 @@ function readURL(input) {
 		document.getElementById('upload-image').style.display = '';
 	}
 }
+
+// Refresh captcha image
+$('#refresh-captcha').click(function() {
+	$.ajax({
+		type: 'GET',
+		url: '{{ route('refresh-captcha') }}',
+		success: function(data) {
+			$('#captcha-image span').html(data.captcha);
+		}
+	});
+});
 </script>
 
 </body>

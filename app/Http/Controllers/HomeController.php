@@ -10,16 +10,25 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $suratMasuk = Mail::all();
-        $disposisi = Mail::where('status', '=', 'DISPOSITION')->get();
-        $users = User::all();
-        $mails = Mail::orderBy('id', 'desc')->take(10)->get();
+        $mails = Mail::all();
+
+        echo '<pre>';
+        print_r($mails);
+        exit();
         
-        return view('pages.dashboard', [
-            'suratMasuk' => $suratMasuk,
-            'disposisi' => $disposisi,
-            'users' => $users,
-            'mails' => $mails,
-        ]);
+        
+        
+        
+        // $suratMasuk = Mail::all();
+        // $disposisi = Mail::where('status', '=', 'DISPOSITION')->get();
+        // $users = User::all();
+        // $mails = Mail::orderBy('id', 'desc')->take(10)->get();
+        
+        // return view('pages.dashboard', [
+        //     'suratMasuk' => $suratMasuk,
+        //     'disposisi' => $disposisi,
+        //     'users' => $users,
+        //     'mails' => $mails,
+        // ]);
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 use Image;
 
 class RegisterController extends Controller
@@ -31,18 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = RouteServiceProvider::HOME;
     protected $redirectTo = "pengguna/verifikasi";
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -57,20 +47,30 @@ class RegisterController extends Controller
             'name' => 'Nama',
             'username' => 'Username',
             'email' => 'Email',
-            'roles' => 'Hak Akses',
+            'role' => 'Hak Akses',
             'password' => 'Password',
             'rank' => 'Pangkat',
+            'captcha' => 'Captcha',
         );
-        
-        $validator = Validator::make($data, [
+
+        $rules = [
             'photo' => ['required', 'image', 'max:5'],
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'roles' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name' => ['required', 'max:255'],
+            'username' => ['required', 'max:255', 'unique:users'],
+            'email' => ['required', 'email', 'max:255', 'unique:users'],
+            'role' => ['required', 'max:255'],
+            'password' => ['required', 'min:8', 'confirmed'],
             'rank' => ['required', 'string', 'max:255'],
-        ]);
+            'captcha' => ['required', 'captcha'],
+        ];
+
+        $message = [
+            'captcha.captcha' => 'The Captcha is not valid',
+        ];
+        
+        // Create validation
+        $validator = Validator::make($data, $rules, $message);
+        // Set custom attribute names for validation
         $validator->setAttributeNames($attributeNames);
 
         return $validator;
@@ -84,23 +84,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $request = app('request');
         $filename = '';
         $filepath = '';
-        $request = app('request');
         if ($request->hasfile('photo')) {
             $photo = $request->file('photo');
             $filename = Carbon::now()->timestamp . '_' . uniqid() . '.' . $photo->getClientOriginalExtension();
             $filepath = $request->file('photo')->storeAs('assets/user', $filename, 'public');
         }
+
+        $uuid = Uuid::uuid4()->getHex();
+        $status = 'PENDING';
         
         return User::create([
-            'photo' => $filepath,
+            'uuid' => $uuid->toString(),
             'name' => $data['name'],
-            'username' => $data['username'],
             'email' => $data['email'],
-            'roles' => $data['roles'],
             'password' => Hash::make($data['password']),
+            'role' => $data['role'],
+            'username' => $data['username'],
             'rank' => $data['rank'],
+            'status' => $status,
+            'photo' => $filepath,
         ]);
     }
 }

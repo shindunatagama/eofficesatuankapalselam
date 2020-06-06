@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\ProfilRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\UpdatePasswordRequest;
@@ -82,19 +83,66 @@ class PenggunaController extends Controller
         return view('pages.pengguna.lupa-password');
     }
 
-    public function resetPassword(ResetPasswordRequest $request)
+    public function resetPassword(Request $request)
     {
         $data = $request->all();
-        $term = $data['useremail'];
+        
+        $attributeNames = array(
+            'useremail' => 'Username atau Email',
+            'password' => 'Password',
+            'captcha' => 'Captcha',
+        );
+
+        $rules = [
+            'useremail' => ['required', 'max:255'],
+            'password' => ['required', 'min:8', 'confirmed'],
+            'captcha' => ['required', 'captcha'],
+        ];
+
+        $message = [
+            'captcha.captcha' => 'The Captcha is not valid',
+        ];
+
+        // Create validation
+        $validator = Validator::make($data, $rules, $message);
+        // Set custom attribute names for validation
+        $validator->setAttributeNames($attributeNames);
+
+        $term = $request->input('useremail');
+        $isExistUser = true;
+        try {
+            $user = 
+            User::where('username', 'LIKE', '%' . $term . '%')
+                ->orWhere('email', 'LIKE', '%' . $term . '%')
+                ->firstOrFail();
+        } catch(ModelNotFoundException $ex) {
+            $isExistUser = false;
+        }
+
+        // After Validation Hook
+        $validator->after(function($validator) use($request, $user, $isExistUser) {
+            if ($isExistUser == true) {
+                if ($user->status != 'ACTIVE') {
+                    $validator->errors()->add('users', "User's status is not active.");
+                }
+            } else {
+                $validator->errors()->add('users', 'User is not exists.');
+            }
+        });
+        // Check if validation is not success
+        if ($validator->fails()) {
+            return 
+            redirect()->route('lupa-password-pengguna')
+                ->withErrors($validator)
+                ->withInput($request->except('password', 'password_confirmation'));
+        }
 
         unset($data['useremail']);
-
-        $user = User::where('username', 'LIKE', '%' . $term . '%')->orWhere('email', 'LIKE', '%' . $term . '%')->firstOrFail();
+        
         $data['password'] = Hash::make($data['password']);
         $user->update($data);
 
         $request->session()->flash('flashmsgsucc', 'Reset password berhasil');
-
         return redirect()->back();
     }
     
