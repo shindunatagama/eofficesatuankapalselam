@@ -128,7 +128,8 @@ Disposisi Surat Masuk
     $("#tbl-persetujuan-surat-masuk").DataTable({
 			"lengthChange": true,
       "responsive": true,
-      "autoWidth": false
+      "autoWidth": false,
+      "order": [[ 4, "desc" ]],
     });
   });
 </script>

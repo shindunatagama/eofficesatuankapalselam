@@ -24,11 +24,11 @@
 				<div class="dropdown-divider"></div>
 				<div class="dropdown-item">
 					<i class="fas fa-user-tag mr-2"></i> Hak Akses
-					<span class="float-right text-muted text-sm">{{ Auth::user()->roles }}</span>
+					<span class="float-right text-muted text-sm">{{ Auth::user()->role }}</span>
 				</div>
 				<div class="dropdown-divider"></div>
 				<div class="dropdown-item">
-					<a href="{{ route('profil-pengguna', Auth::user()->username) }}" class="btn btn-default btn-flat">Profil</a>
+					<a href="{{ route('profil-pengguna', Auth::user()->uuid) }}" class="btn btn-default btn-flat">Profil</a>
 					<a href="#" class="float-right btn btn-default btn-flat" data-toggle="modal" data-target="#modal-logout">Keluar</a>
 				</div>
 			</div>
