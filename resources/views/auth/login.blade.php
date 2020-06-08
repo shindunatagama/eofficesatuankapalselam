@@ -65,6 +65,15 @@
             </div>
           </div>
         </div>
+        <div class="row mb-3">
+          <div class="col-5">
+            <input type="text" name="captcha" id="captcha" class="form-control" placeholder="Captcha" autocomplete="off">
+          </div>
+          <div class="col-7 text-right" id="captcha-image">
+            <span>{!! captcha_img() !!}</span>
+            <button type="button" class="btn btn-default"><i class="fas fa-sync-alt" id="refresh-captcha"></i></button>
+          </div>
+        </div>
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
@@ -102,6 +111,19 @@
 <script src="{{ url('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ url('adminlte/dist/js/adminlte.min.js') }}"></script>
+
+<script>
+// Refresh captcha image
+$('#refresh-captcha').click(function() {
+	$.ajax({
+		type: 'GET',
+		url: '{{ route('refresh-captcha') }}',
+		success: function(data) {
+			$('#captcha-image span').html(data.captcha);
+		}
+	});
+});
+</script>
 
 </body>
 </html>

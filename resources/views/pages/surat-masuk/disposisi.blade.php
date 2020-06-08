@@ -63,9 +63,9 @@ Disposisi Surat Masuk
                   <tr>
                     <th>Terima Dari</th>
                     <th>Nomor Surat</th>
-                    <th>Tanggal Surat</th>
-                    <th>Perihal Surat</th>
-                    <th>Penerima Surat</th>
+                    <th>Perihal</th>
+                    <th>Penerima</th>
+                    <th>Waktu Input</th>
                     <th>Action</th>
                   </tr>
 								</thead>
@@ -74,11 +74,11 @@ Disposisi Surat Masuk
                   <tr>
                     <td>{{ $mail->terima_dari }}</td>
                     <td>{{ $mail->nomor_surat }}</td>
-                    <td>{{ $mail->tanggal_surat }}</td>
                     <td>{{ $mail->perihal_surat }}</td>
-                    <td>{{ $mail->user_penerima }}</td>
+                    <td>{{ $mail->userPenerima->name }}</td>
+                    <td>{{ $mail->created_at }}</td>
                     <td>
-                      <a href="{{ route('disposisi-view-surat-masuk', $mail->id) }}">
+                      <a href="{{ route('disposisi-view-surat-masuk', $mail->uuid) }}">
                         <button type="button" class="btn btn-block btn-outline-info">
                           Detail
                         </button>

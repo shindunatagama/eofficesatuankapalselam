@@ -63,10 +63,9 @@ Persetujuan Surat Masuk
                   <tr>
                     <th>Terima Dari</th>
                     <th>Nomor Surat</th>
-                    <th>Tanggal Surat</th>
-                    <th>Perihal Surat</th>
-                    <th>Penerima Surat</th>
-                    <th>Status</th>
+                    <th>Perihal</th>
+                    <th>Penerima</th>
+                    <th>Waktu Input</th>
                     <th>Action</th>
                   </tr>
 								</thead>
@@ -75,22 +74,11 @@ Persetujuan Surat Masuk
                   <tr>
                     <td>{{ $mail->terima_dari }}</td>
                     <td>{{ $mail->nomor_surat }}</td>
-                    <td>{{ $mail->tanggal_surat }}</td>
                     <td>{{ $mail->perihal_surat }}</td>
-                    <td>{{ $mail->user_penerima }}</td>
+                    <td>{{ $mail->userPenerima->name }}</td>
+                    <td>{{ $mail->created_at }}</td>
                     <td>
-                      @if ($mail->status == 'PENDING')
-                      <span class="badge badge-warning">{{ $mail->status }}</span>
-                      @elseif ($mail->status == 'APPROVED')
-                      <span class="badge badge-success">{{ $mail->status }}</span>
-                      @elseif ($mail->status == 'REJECTED')
-                      <span class="badge badge-danger">{{ $mail->status }}</span>
-                      @elseif ($mail->status == 'DISPOSITION')
-                      <span class="badge badge-info">{{ $mail->status }}</span>   
-                      @endif
-                    </td>
-                    <td>
-                      <a href="{{ route('approval-surat-masuk', $mail->id) }}">
+                      <a href="{{ route('approval-surat-masuk', $mail->uuid) }}">
                         <button type="button" class="btn btn-block btn-outline-info">
                           Detail
                         </button>

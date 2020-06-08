@@ -18,7 +18,7 @@ Profil Pengguna
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item">Pengguna</li>
-            <li class="breadcrumb-item active">Profil</li>
+            <li class="breadcrumb-item active">Detail</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -53,20 +53,20 @@ Profil Pengguna
       <div class="row">
         <div class="col-md-12">
 					<!-- Profil Box -->
-					<div class="card card-primary">
+					<div class="card card-warning card-outline">
 						<div class="card-header">
-							<h3 class="card-title">Profil</h3>
+							<h3 class="card-title">Detail</h3>
 						</div>
             <!-- /.card-header -->
             <!-- form start -->
             <form class="form-horizontal" action="{{ route('update-pengguna') }}" method="post">
               @csrf
               
-              <input type="hidden" name="id" value="{{ $user->id }}"/>
+              <input type="hidden" name="uuid" value="{{ $user->uuid }}"/>
 
               <div class="card-body">
                 <div class="form-group row">
-                  <div class="col-sm-2 col-form-label">Foto</div>
+                  <label class="col-sm-2 col-form-label">Foto</label>
                   <div class="col-sm-10">
                     <img class="profile-user-img img-fluid img-circle" id="upload-image"
                       src="{{ Storage::url($user->photo) }}" alt="User profile picture">
@@ -100,11 +100,11 @@ Profil Pengguna
                   <label for="roles" class="col-sm-2 col-form-label">Hak Akses</label>
                   <div class="col-sm-10">
                     <select name="roles" class="form-control">
-                      <option value="STAFF" {{ old('roles', $user->roles) == "STAFF" ? "selected" : "" }}>Staff</option>
-                      <option value="SEKRETARIS" {{ old('roles', $user->roles) == "SEKRETARIS" ? "selected" : "" }}>Sekretaris</option>
-                      <option value="SUPERVISOR" {{ old('roles', $user->roles) == "SUPERVISOR" ? "selected" : "" }}>Supervisor</option>
-                      <option value="PIMPINAN" {{ old('roles', $user->roles) == "PIMPINAN" ? "selected" : "" }}>Pimpinan</option>
-                      <option value="ADMIN" {{ old('roles', $user->roles) == "ADMIN" ? "selected" : "" }}>Admin</option>
+                      <option value="STAFF" {{ old('role', $user->role) == "STAFF" ? "selected" : "" }}>Staff</option>
+                      <option value="SEKRETARIS" {{ old('role', $user->role) == "SEKRETARIS" ? "selected" : "" }}>Sekretaris</option>
+                      <option value="SUPERVISOR" {{ old('role', $user->role) == "SUPERVISOR" ? "selected" : "" }}>Supervisor</option>
+                      <option value="PIMPINAN" {{ old('role', $user->role) == "PIMPINAN" ? "selected" : "" }}>Pimpinan</option>
+                      <option value="ADMIN" {{ old('role', $user->role) == "ADMIN" ? "selected" : "" }}>Admin</option>
                     </select>
                   </div>
                 </div>
@@ -121,7 +121,7 @@ Profil Pengguna
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button type="submit" class="btn btn-success">Update</button>
+                <button type="submit" class="btn bg-gradient-primary">Update</button>
                 <a href="{{ route('pemeliharaan-pengguna') }}">
                   <button type="button" class="btn btn-default">Kembali</button>
                 </a>

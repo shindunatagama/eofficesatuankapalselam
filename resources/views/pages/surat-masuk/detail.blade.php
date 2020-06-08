@@ -32,7 +32,7 @@ Detail Surat Masuk
       <div class="row">
         <div class="col-md-12">
           <!-- Horizontal Form -->
-          <div class="card card-info">
+          <div class="card card-warning card-outline">
             <div class="card-header">
               <h3 class="card-title">Detail Surat Masuk</h3>
             </div>
@@ -70,6 +70,26 @@ Detail Surat Masuk
                     <input type="text" name="perihal_surat" value="{{ $mail->perihal_surat }}" class="form-control" id="perihal-surat" placeholder="Perihal" readonly>
                   </div>
                 </div>
+
+                <div class="form-group row">
+                  <label for="user-penerima" class="col-sm-2 col-form-label">Penerima</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="user_penerima" value="{{ $mail->userPenerima->name }}" class="form-control" id="user-penerima" placeholder="User Penerima" readonly>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="user-persetujuan" class="col-sm-2 col-form-label">Menyetujui</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="user_persetujuan" value="{{ $mail->userPersetujuan->name }}" class="form-control" id="user-persetujuan" placeholder="User Persetujuan" readonly>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="user-disposisi" class="col-sm-2 col-form-label">Mendisposisi</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="user_disposisi" value="{{ $mail->userDisposisi->name }}" class="form-control" id="user-disposisi" placeholder="User Disposisi" readonly>
+                  </div>
+                </div>
+
                 <div class="form-group row">
                   <label for="file" class="col-sm-2 col-form-label">File</label>
                   <label class="col-sm-10 col-form-label">
@@ -205,7 +225,7 @@ Detail Surat Masuk
               <!-- /.card-body -->
               <div class="card-footer">
                 <a href="{{ route('daftar-surat-masuk') }}">
-                  <button type="button" class="btn btn-info">Kembali</button>
+                  <button type="button" class="btn bg-gradient-primary">Kembali</button>
                 </a>
               </div>
               <!-- /.card-footer -->

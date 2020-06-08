@@ -42,9 +42,9 @@ Daftar Surat Masuk
                   <tr>
                     <th>Terima Dari</th>
                     <th>Nomor Surat</th>
-                    <th>Tanggal Surat</th>
-                    <th>Perihal Surat</th>
-                    <th>Penerima Surat</th>
+                    <th>Perihal</th>
+                    <th>Penerima</th>
+                    <th>Waktu Input</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -54,9 +54,9 @@ Daftar Surat Masuk
                   <tr>
                     <td>{{ $mail->terima_dari }}</td>
                     <td>{{ $mail->nomor_surat }}</td>
-                    <td>{{ $mail->tanggal_surat }}</td>
                     <td>{{ $mail->perihal_surat }}</td>
-                    <td>{{ $mail->user_penerima }}</td>
+                    <td>{{ $mail->userPenerima->name }}</td>
+                    <td>{{ $mail->created_at }}</td>
                     <td>
                       @if ($mail->status == 'PENDING')
                       <span class="badge badge-warning">{{ $mail->status }}</span>
@@ -69,7 +69,7 @@ Daftar Surat Masuk
                       @endif
                     </td>
                     <td>
-                      <a href="{{ route('detail-surat-masuk', $mail->id) }}">
+                      <a href="{{ route('detail-surat-masuk', $mail->uuid) }}">
                         <button type="button" class="btn btn-block btn-outline-info">
                           Detail
                         </button>
@@ -119,7 +119,8 @@ Daftar Surat Masuk
     $("#tbl-daftar-surat-masuk").DataTable({
 			"lengthChange": true,
       "responsive": true,
-      "autoWidth": false
+      "autoWidth": false,
+      "order": [[ 4, "desc" ]],
     });
   });
 </script>

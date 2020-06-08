@@ -30,7 +30,7 @@ Pemeliharaan Surat Masuk
 	<section class="content">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-12">
+				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header">
 							<h3 class="card-title">Daftar Pengguna</h3>
@@ -58,7 +58,7 @@ Pemeliharaan Surat Masuk
                     <td>{{ $user->username }}</td>
                     <td>{{ $user->created_at }}</td>
                     <td>{{ $user->updated_at }}</td>
-                    <td>{{ $user->roles }}</td>
+                    <td>{{ $user->role }}</td>
                     <td>
                       @if ($user->status == 'PENDING')
                       <span class="badge badge-warning">{{ $user->status }}</span>
@@ -69,13 +69,13 @@ Pemeliharaan Surat Masuk
                       @endif
                     </td>
                     <td>
-                      <a href="{{ route('detail-pengguna', $user->username) }}">
+                      <a href="{{ route('detail-pengguna', $user->uuid) }}">
                         <button type="button" class="btn btn-block btn-outline-info">
                           Detail
                         </button>
                       </a>
                       &nbsp;
-                      <a href="{{ route('edit-pengguna', $user->username) }}">
+                      <a href="{{ route('edit-pengguna', $user->uuid) }}">
                         <button type="button" class="btn btn-block btn-outline-secondary">
                           Edit
                         </button>
@@ -125,7 +125,8 @@ Pemeliharaan Surat Masuk
     $("#tbl-pengguna").DataTable({
 			"lengthChange": true,
       "responsive": true,
-      "autoWidth": false
+      "autoWidth": false,
+      "order": [[ 3, "desc" ]]
     });
   });
 </script>

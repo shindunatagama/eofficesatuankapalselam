@@ -53,16 +53,16 @@ Profil Pengguna
       <div class="row">
         <div class="col-md-12">
 					<!-- Ubah Password Box -->
-					<div class="card card-primary">
+					<div class="card card-warning card-outline">
 						<div class="card-header">
 							<h3 class="card-title">Ubah Password</h3>
 						</div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form class="form-horizontal" action="{{ route('update-password') }}" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" action="{{ route('update-password') }}" method="post">
               @csrf
 
-              <input type="hidden" name="username" value="{{ $user->username }}"/>
+              <input type="hidden" name="uuid" value="{{ $user->id . $user->uuid }}"/>
 
               <div class="card-body">
                 <div class="form-group row">
@@ -80,13 +80,13 @@ Profil Pengguna
                 <div class="form-group row">
                   <label for="password-confirm" class="col-sm-2 col-form-label">Konfirmasi Password Baru</label>
                   <div class="col-sm-10">
-                    <input type="password" name="password_confirmation" value="" id="password-confirm" class="form-control" placeholder="Konfirmasi Password">
+                    <input type="password" name="password_confirmation" value="" id="password-confirm" class="form-control" placeholder="Konfirmasi Password Baru">
                   </div>
                 </div>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button type="submit" class="btn btn-success">Ubah Password</button>
+                <button type="submit" class="btn bg-gradient-primary">Ubah Password</button>
               </div>
               <!-- /.card-footer -->
             </form>

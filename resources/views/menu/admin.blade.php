@@ -31,13 +31,13 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ route('persetujuan-surat-masuk') }}" class="nav-link {{ (Request::segment(1) == 'suratmasuk' && Request::segment(2) == 'persetujuan') ? 'active' : '' }}">
+        <a href="{{ route('persetujuan-surat-masuk') }}" class="nav-link {{ (Request::segment(1) == 'suratmasuk' && in_array(Request::segment(2), ['persetujuan', 'approval'])) ? 'active' : '' }}">
           <i class="far fa-circle nav-icon"></i>
           <p>Persetujuan</p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ route('disposisi-surat-masuk') }}" class="nav-link {{ (Request::segment(1) == 'suratmasuk' && Request::segment(2) == 'disposisi') ? 'active' : '' }}">
+        <a href="{{ route('disposisi-surat-masuk') }}" class="nav-link {{ (Request::segment(1) == 'suratmasuk' && in_array(Request::segment(2), ['disposisi', 'disposisi-view'])) ? 'active' : '' }}">
           <i class="far fa-circle nav-icon"></i>
           <p>Disposisi</p>
         </a>
@@ -54,13 +54,13 @@
     </a>
     <ul class="nav nav-treeview">
       <li class="nav-item">
-        <a href="{{ route('ubah-password-pengguna', Auth::user()->username) }}" class="nav-link {{ (Request::segment(1) == 'pengguna' && Request::segment(2) == 'ubahpassword') ? 'active' : '' }}">
+        <a href="{{ route('ubah-password-pengguna', Auth::user()->uuid) }}" class="nav-link {{ (Request::segment(1) == 'pengguna' && Request::segment(2) == 'ubah-password') ? 'active' : '' }}">
           <i class="far fa-circle nav-icon"></i>
           <p>Ubah Password</p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ route('profil-pengguna', Auth::user()->username) }}" class="nav-link {{ (Request::segment(1) == 'pengguna' && Request::segment(2) == 'profil') ? 'active' : '' }}">
+        <a href="{{ route('profil-pengguna', Auth::user()->uuid) }}" class="nav-link {{ (Request::segment(1) == 'pengguna' && Request::segment(2) == 'profil') ? 'active' : '' }}">
           <i class="far fa-circle nav-icon"></i>
           <p>Profil</p>
         </a>

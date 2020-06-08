@@ -53,7 +53,7 @@ Persetujuan Surat Masuk
       <div class="row">
         <div class="col-md-12">
           <!-- Horizontal Form -->
-          <div class="card card-info">
+          <div class="card card-warning card-outline">
             <div class="card-header">
               <h3 class="card-title">Persetujuan Surat Masuk</h3>
             </div>
@@ -62,7 +62,7 @@ Persetujuan Surat Masuk
             <form class="form-horizontal" action="{{ route('update-surat-masuk') }}" method="post">
               @csrf
 
-              <input type="hidden" name="id" value="{{ $mail->id }}">
+              <input type="hidden" name="uuid" value="{{ $mail->uuid }}">
 
               <div class="card-body">
                 <div class="form-group row">
@@ -114,8 +114,8 @@ Persetujuan Surat Masuk
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button type="submit" class="btn btn-danger">Kirim</button>
-                <a href="{{ route('daftar-surat-masuk') }}">
+                <button type="submit" class="btn bg-gradient-primary">Update</button>
+                <a href="{{ route('persetujuan-surat-masuk') }}">
                   <button type="button" class="btn btn-default">Kembali</button>
                 </a>
               </div>

@@ -53,7 +53,7 @@ Profil Pengguna
       <div class="row">
         <div class="col-md-12">
 					<!-- Profil Box -->
-					<div class="card card-primary">
+					<div class="card card-warning card-outline">
 						<div class="card-header">
 							<h3 class="card-title">Profil</h3>
 						</div>
@@ -63,7 +63,7 @@ Profil Pengguna
               @csrf
 
               <input type="hidden" name="old_photo" value="{{ $user->photo }}"/>
-              <input type="hidden" name="id" value="{{ $user->id }}"/>
+              <input type="hidden" name="uuid" value="{{ $user->id . $user->uuid }}"/>
 
               <div class="card-body">
                 <div class="form-group row">
@@ -110,7 +110,7 @@ Profil Pengguna
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button type="submit" class="btn btn-success">Update</button>
+                <button type="submit" class="btn bg-gradient-primary">Update</button>
               </div>
               <!-- /.card-footer -->
             </form>

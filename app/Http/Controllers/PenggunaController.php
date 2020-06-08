@@ -7,10 +7,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Http\Requests\ProfilRequest;
-use App\Http\Requests\ResetPasswordRequest;
-use App\Http\Requests\UpdatePasswordRequest;
-use App\Http\Requests\PemeliharaanPenggunaRequest;
 use App\User;
 use Carbon\Carbon;
 use Image;
@@ -22,41 +18,108 @@ class PenggunaController extends Controller
         return view('pages.pengguna.verifikasi');
     }
 
-    public function ubahPassword($username)
+    public function ubahPassword($uuid)
     {
-        $user = User::where('username', $username)->first();
+        $user = User::where('uuid', $uuid)->first();
 
         return view('pages.pengguna.ubah-password', [
             'user' => $user
         ]);
     }
 
-    public function updatePassword(UpdatePasswordRequest $request, Validator $validator)
+    public function updatePassword(Request $request)
     {
         $data = $request->all();
+        $uuid = $data['uuid'];
+        $data['id'] = substr($uuid, 0, 1);
+        $data['uuid'] = substr($uuid, 1);
 
-        $user = User::where('username', $data['username'])->first();
+        $attributeNames = array(
+            'old_password' => 'Password Lama',
+            'password' => 'Password Baru',
+            'password_confirmation' => 'Konfirmasi Password Baru',
+        );
+    
+        $rules = [
+            'old_password' => ['required', 'min:8'],
+            'password' => ['required', 'min:8', 'different:old_password'],
+            'password_confirmation' => ['required', 'min:8', 'same:password'],
+        ];
+
+        // Create validation
+        $validator = Validator::make($data, $rules);
+        // Set custom attribute names for validation
+        $validator->setAttributeNames($attributeNames);
+        // After Validation Hook
+        $validator->after(function($validator) use($data) {
+            if ($data['old_password'] != '' && !Hash::check($data['old_password'], \Auth::user()->password)) {
+                $validator->errors()->add('old_password', 'Password Lama is not valid');
+            }
+        });
+        // Check if validation is not success
+        if ($validator->fails()) {
+            return 
+            redirect()->back()
+                ->withErrors($validator);
+        }
+
+        $user = User::where('uuid', $data['uuid'])->first();
+
         $data['password'] = Hash::make($data['password']);
         $user->update($data);
 
         $request->session()->flash('flashmsgsucc', 'Update password berhasil');
-
         return redirect()->back();
     }
 
-    public function profil($username)
+    public function profil($uuid)
     {
-        $user = User::where('username', $username)->first();
+        $user = User::where('uuid', $uuid)->first();
         
         return view('pages.pengguna.profil', [
             'user' => $user
         ]);
     }
 
-    public function updateProfil(ProfilRequest $request)
+    public function updateProfil(Request $request)
     {
         $data = $request->all();
+        $uuid = $data['uuid'];
+        $data['id'] = substr($uuid, 0, 1);
+        $data['uuid'] = substr($uuid, 1);
 
+        $attributeNames = array(
+            'photo' => 'Foto',
+            'name' => 'Nama',
+            'username' => 'Username',
+            'email' => 'Email',
+            'rank' => 'Pangkat',
+        );
+
+        $rules = [
+            'old_photo' => ['required_without:photo', 'max:255'],
+            'photo' => ['required_without:old_photo', 'image', 'max:5'],
+            'name' => ['required', 'max:255'],
+            'username' => ['required', 'max:255', 'unique:users,username,' . $data['id']],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $data['id']],
+            'rank' => ['required', 'max:255'],
+        ];
+
+        // Create validation
+        $validator = Validator::make($data, $rules);
+        // Set custom attribute names for validation
+        $validator->setAttributeNames($attributeNames);
+
+        // Check if validation is not success
+        if ($validator->fails()) {
+            return 
+            redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $filename = '';
+        $filepath = '';
         if ($request->hasfile('photo')) {
             $photo = $request->file('photo');
             $filename = Carbon::now()->timestamp . '_' . uniqid() . '.' . $photo->getClientOriginalExtension();
@@ -68,13 +131,13 @@ class PenggunaController extends Controller
             $data['photo'] = $data['old_photo'];
         }
 
+        $user = User::where('uuid', $data['uuid'])->first();
+
         unset($data['old_photo']);
 
-        $user = User::findOrFail($data['id']);
         $user->update($data);
 
         $request->session()->flash('flashmsgsucc', 'Profil berhasil diupdate');
-
         return redirect()->back();
     }
 
@@ -155,30 +218,51 @@ class PenggunaController extends Controller
         ]);
     }
 
-    public function edit($username)
+    public function edit($uuid)
     {
-        $user = User::where('username', $username)->first();
+        $user = User::where('uuid', $uuid)->first();
 
         return view('pages.pengguna.edit', [
             'user' => $user
         ]);
     }
 
-    public function update(PemeliharaanPenggunaRequest $request)
+    public function update(Request $request)
     {
         $data = $request->all();
-        $user = User::where('username', $data['username'])->first();
 
+        $attributeNames = array(
+            'role' => 'Hak Akses',
+            'status' => 'Status',
+        );
+
+        $rules = [
+            'roles' => ['required', 'max:255'],
+            'status' => ['required', 'max:255'],
+        ];
+
+        // Create validation
+        $validator = Validator::make($data, $rules);
+        // Set custom attribute names for validation
+        $validator->setAttributeNames($attributeNames);
+        // Check if validation is not success
+        if ($validator->fails()) {
+            return 
+            redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user = User::where('uuid', $data['uuid'])->first();
         $user->update($data);
 
         $request->session()->flash('flashmsgsucc', 'Pemeliharaan pengguna berhasil');
-
         return redirect()->back();
     }
 
-    public function detail($username)
+    public function detail($uuid)
     {
-        $user = User::where('username', $username)->first();
+        $user = User::where('uuid', $uuid)->first();
 
         return view('pages.pengguna.detail', [
             'user' => $user

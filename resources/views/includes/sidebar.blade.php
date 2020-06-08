@@ -10,15 +10,15 @@
 	<div class="sidebar">
 		<!-- Sidebar Menu -->
 		<nav class="mt-2">
-			@if (Auth::user()->roles == 'ADMIN')
+			@if (Auth::user()->role == 'ADMIN')
 			@include('menu.admin')
-			@elseif (Auth::user()->roles == 'PIMPINAN')
+			@elseif (Auth::user()->role == 'PIMPINAN')
 			@include('menu.pimpinan')
-			@elseif (Auth::user()->roles == 'SUPERVISOR')
+			@elseif (Auth::user()->role == 'SUPERVISOR')
 			@include('menu.supervisor')
-			@elseif (Auth::user()->roles == 'SEKRETARIS')
+			@elseif (Auth::user()->role == 'SEKRETARIS')
 			@include('menu.sekretaris')
-			@elseif (Auth::user()->roles == 'STAFF')
+			@elseif (Auth::user()->role == 'STAFF')
 			@include('menu.staff')
 			@endif
 		</nav>

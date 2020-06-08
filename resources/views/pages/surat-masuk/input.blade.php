@@ -53,7 +53,7 @@ Input Surat Masuk
       <div class="row">
         <div class="col-md-12">
           <!-- Horizontal Form -->
-          <div class="card card-info">
+          <div class="card card-warning card-outline">
             <div class="card-header">
               <h3 class="card-title">Input Surat Masuk</h3>
             </div>
@@ -107,7 +107,7 @@ Input Surat Masuk
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button type="submit" class="btn btn-info">Simpan</button>
+                <button type="submit" class="btn bg-gradient-primary">Simpan</button>
               </div>
               <!-- /.card-footer -->
             </form>

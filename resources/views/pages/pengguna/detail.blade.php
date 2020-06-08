@@ -18,7 +18,7 @@ Profil Pengguna
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item">Pengguna</li>
-            <li class="breadcrumb-item active">Profil</li>
+            <li class="breadcrumb-item active">Detail</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -53,9 +53,9 @@ Profil Pengguna
       <div class="row">
         <div class="col-md-12">
 					<!-- Profil Box -->
-					<div class="card card-primary">
+					<div class="card card-warning card-outline">
 						<div class="card-header">
-							<h3 class="card-title">Profil</h3>
+							<h3 class="card-title">Detail</h3>
 						</div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -64,7 +64,7 @@ Profil Pengguna
 
               <div class="card-body">
                 <div class="form-group row">
-                  <div class="col-sm-2 col-form-label">Foto</div>
+                  <label class="col-sm-2 col-form-label">Foto</label>
                   <div class="col-sm-10">
                     <img class="profile-user-img img-fluid img-circle" id="upload-image"
                       src="{{ Storage::url($user->photo) }}" alt="User profile picture">
@@ -98,7 +98,7 @@ Profil Pengguna
               <!-- /.card-body -->
               <div class="card-footer">
                 <a href="{{ route('pemeliharaan-pengguna') }}">
-                  <button type="button" class="btn btn-success">Kembali</button>
+                  <button type="button" class="btn bg-gradient-primary">Kembali</button>
                 </a>
               </div>
               <!-- /.card-footer -->

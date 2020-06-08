@@ -36,7 +36,7 @@ Dashboard
 
             <div class="info-box-content">
               <span class="info-box-text">Surat Masuk</span>
-              <span class="info-box-number">{{ count($suratMasuk) }}</span>
+              <span class="info-box-number">{{ $jumlahSuratMasuk }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -49,7 +49,7 @@ Dashboard
 
             <div class="info-box-content">
               <span class="info-box-text">Disposisi</span>
-              <span class="info-box-number">{{ count($disposisi) }}</span>
+              <span class="info-box-number">{{ $jumlahDisposisi }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -66,7 +66,7 @@ Dashboard
 
             <div class="info-box-content">
               <span class="info-box-text">Pengguna</span>
-              <span class="info-box-number">{{ count($users) }}</span>
+              <span class="info-box-number">{{ $jumlahPengguna }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -82,64 +82,61 @@ Dashboard
         <div class="col-md-12">
           <!-- TABLE: SURAT MASUK TERAKHIR -->
           <div class="card">
-            <div class="card-header border-transparent">
+            <div class="card-header">
               <h3 class="card-title">Surat Masuk Terakhir</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool">
-                  <i class="fas fa-sync-alt"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body p-2">
-              <div class="table-responsive">
-                <table class="table m-0">
-                  <thead>
+              <table id="tbl-surat-masuk-terakhir" class="table table-bordered table-striped">
+                <thead>
                   <tr>
+                    <th>Terima Dari</th>
                     <th>Nomor Surat</th>
-                    <th>Penginput</th>
+                    <th>Perihal</th>
+                    <th>Penerima</th>
                     <th>Waktu Input</th>
                     <th>Status</th>
                   </tr>
-                  </thead>
-                  <tbody>
-                    @forelse ($mails as $mail)
-                    <tr>
-                      <td>{{ $mail->nomor_surat }}</td>
-                      <td>{{ $mail->user_penerima }}</td>
-                      <td>{{ $mail->created_at }}</td>
-                      <td>
-                        @if ($mail->status == 'PENDING')
-                        <span class="badge badge-warning">{{ $mail->status }}</span>
-                        @elseif ($mail->status == 'APPROVED')
-                        <span class="badge badge-success">{{ $mail->status }}</span>
-                        @elseif ($mail->status == 'REJECTED')
-                        <span class="badge badge-danger">{{ $mail->status }}</span>
-                        @elseif ($mail->status == 'DISPOSITION')
-                        <span class="badge badge-info">{{ $mail->status }}</span>   
-                        @endif
-                      </td>
-                    </tr>
-                    @empty
-                    <tr>
-                      <td colspan="4" class="text-center">
-                        Data Kosong
-                      </td>
-                    </tr>
-                    @endforelse
-                  </tbody>
-                </table>
-              </div>
+                </thead>
+                <tbody>
+                  @forelse ($mails as $mail)
+                  <tr>
+                    <td>{{ $mail->terima_dari }}</td>
+                    <td>{{ $mail->nomor_surat }}</td>
+                    <td>{{ $mail->perihal_surat }}</td>
+                    <td>{{ $mail->userPenerima->name }}</td>
+                    <td>{{ $mail->created_at }}</td>
+                    <td>
+                      @if ($mail->status == 'PENDING')
+                      <span class="badge badge-warning">{{ $mail->status }}</span>
+                      @elseif ($mail->status == 'APPROVED')
+                      <span class="badge badge-success">{{ $mail->status }}</span>
+                      @elseif ($mail->status == 'REJECTED')
+                      <span class="badge badge-danger">{{ $mail->status }}</span>
+                      @elseif ($mail->status == 'DISPOSITION')
+                      <span class="badge badge-info">{{ $mail->status }}</span>   
+                      @endif
+                    </td>
+                  </tr>
+                  @empty
+                  <tr>
+                    <td colspan="4" class="text-center">
+                      Data Kosong
+                    </td>
+                  </tr>
+                  @endforelse
+                </tbody>
+              </table>
               <!-- /.table-responsive -->
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-              <a href="{{ route('input-surat-masuk') }}" class="btn btn-sm btn-info float-left">Input Surat masuk</a>
-              <a href="{{ route('daftar-surat-masuk') }}" class="btn btn-sm btn-secondary float-right">Lihat Daftar Surat Masuk</a>
+              @if (in_array(Auth::user()->role, ['ADMIN', 'SEKRETARIS']))
+              <a href="{{ route('input-surat-masuk') }}" class="btn btn-sm btn-outline-success float-left">Input Surat masuk</a>&nbsp;
+              @endif
+              @if (in_array(Auth::user()->role, ['ADMIN', 'SEKRETARIS']))
+              <a href="{{ route('daftar-surat-masuk') }}" class="btn btn-sm btn-outline-secondary">Lihat Daftar Surat Masuk</a>
+              @endif
             </div>
             <!-- /.card-footer -->
           </div>
@@ -154,3 +151,28 @@ Dashboard
 </div>
 <!-- /.content-wrapper -->
 @endsection
+
+@push('addon-style')
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ url('adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ url('adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+@endpush
+
+@push('addon-script')
+<!-- DataTables -->
+<script src="{{ url('adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url('adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url('adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ url('adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#tbl-surat-masuk-terakhir").DataTable({
+			"lengthChange": true,
+      "responsive": true,
+      "autoWidth": false,
+      "order": [[ 4, "desc" ]],
+    });
+  });
+</script>
+@endpush
