@@ -72,21 +72,21 @@ Detail Surat Masuk
                 </div>
 
                 <div class="form-group row">
-                  <label for="user-penerima" class="col-sm-2 col-form-label">Penerima</label>
+                  <label for="user-penerima" class="col-sm-2 col-form-label">Menerima</label>
                   <div class="col-sm-10">
-                    <input type="text" name="user_penerima" value="{{ $mail->userPenerima->name }}" class="form-control" id="user-penerima" placeholder="User Penerima" readonly>
+                    <input type="text" name="user_penerima" value="{{ $mail->userPenerima != null ? $mail->userPenerima->name : '-' }}" class="form-control" id="user-penerima" placeholder="User Penerima" readonly>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="user-persetujuan" class="col-sm-2 col-form-label">Menyetujui</label>
                   <div class="col-sm-10">
-                    <input type="text" name="user_persetujuan" value="{{ $mail->userPersetujuan->name }}" class="form-control" id="user-persetujuan" placeholder="User Persetujuan" readonly>
+                    <input type="text" name="user_persetujuan" value="{{ $mail->userPersetujuan != null ? $mail->userPersetujuan->name : '-' }}" class="form-control" id="user-persetujuan" placeholder="User Persetujuan" readonly>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="user-disposisi" class="col-sm-2 col-form-label">Mendisposisi</label>
                   <div class="col-sm-10">
-                    <input type="text" name="user_disposisi" value="{{ $mail->userDisposisi->name }}" class="form-control" id="user-disposisi" placeholder="User Disposisi" readonly>
+                    <input type="text" name="user_disposisi" value="{{ $mail->userDisposisi != null ? $mail->userDisposisi->name : '-' }}" class="form-control" id="user-disposisi" placeholder="User Disposisi" readonly>
                   </div>
                 </div>
 
