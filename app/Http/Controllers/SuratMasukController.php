@@ -25,10 +25,6 @@ class SuratMasukController extends Controller
     {
         $mail = Mail::with(['userPenerima', 'userPersetujuan', 'userDisposisi'])->where('uuid', $uuid)->first();
 
-        // echo '<pre>';
-        // print_r($mail);
-        // exit();
-
         return view('pages.surat-masuk.detail', [
             'mail' => $mail
         ]);
