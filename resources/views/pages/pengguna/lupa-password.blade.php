@@ -18,10 +18,12 @@
 	<!-- My style -->
   <link rel="stylesheet" href="{{ url('adminlte/styles/mystyle.css') }}">
   <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+	<!-- Favicon -->
+  <link rel="icon" href="{{ url('favicon-16x16.png') }}" type="image/x-icon"/>
 </head>
 <body class="hold-transition login-page">
-<div class="login-box" style="width: 650px;">
+<div class="login-box">
   <div class="login-logo">
 		<a href="{{ route('home') }}">
 			<img src="{{ url('adminlte/dist/img/logo-satuan-kapal-selam.png') }}" alt="AdminLTE Logo" class="img-circle" style="opacity: .8;height: 200px">
@@ -71,11 +73,13 @@
 				</div>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-2">
+						<div class="col-4">
 							<input type="text" name="captcha" id="captcha" class="form-control" placeholder="Captcha" autocomplete="off">
 						</div>
 						<div class="col-4" id="captcha-image">
 							<span>{!! captcha_img() !!}</span>
+						</div>
+						<div class="col-2 ml-3" id="captcha-image">
 							<button type="button" class="btn btn-default"><i class="fas fa-sync-alt" id="refresh-captcha"></i></button>
 						</div>
 					</div>
@@ -85,10 +89,10 @@
 			<div class="card-footer">
 				<div class="form-group">
 					<div class="row">
-						<div class="col-4">
+						<div class="col-6">
 							<button type="submit" class="btn btn-primary btn-block">Reset Password</button>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<a href="{{ route('home') }}">
 								<button type="button" class="btn btn-default btn-block">Home</button>
 							</a>

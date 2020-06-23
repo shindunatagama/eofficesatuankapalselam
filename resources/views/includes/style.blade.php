@@ -8,3 +8,5 @@
 <link rel="stylesheet" href="{{ url('adminlte/styles/mystyle.css') }}">
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<!-- Favicon -->
+<link rel="icon" href="{{ url('favicon-16x16.png') }}" type="image/x-icon"/>

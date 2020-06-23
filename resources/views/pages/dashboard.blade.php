@@ -99,7 +99,7 @@ Dashboard
                   </tr>
                 </thead>
                 <tbody>
-                  @forelse ($mails as $mail)
+                  @foreach ($mails as $mail)
                   <tr>
                     <td>{{ $mail->terima_dari }}</td>
                     <td>{{ $mail->nomor_surat }}</td>
@@ -118,13 +118,7 @@ Dashboard
                       @endif
                     </td>
                   </tr>
-                  @empty
-                  <tr>
-                    <td colspan="4" class="text-center">
-                      Data Kosong
-                    </td>
-                  </tr>
-                  @endforelse
+                  @endforeach
                 </tbody>
               </table>
               <!-- /.table-responsive -->

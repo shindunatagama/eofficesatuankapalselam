@@ -58,7 +58,7 @@ Disposisi Surat Masuk
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
-							<table id="tbl-persetujuan-surat-masuk" class="table table-bordered table-striped">
+							<table id="tbl-disposisi-surat-masuk" class="table table-bordered table-striped">
 								<thead>
                   <tr>
                     <th>Terima Dari</th>
@@ -70,7 +70,7 @@ Disposisi Surat Masuk
                   </tr>
 								</thead>
 								<tbody>
-                  @forelse ($mails as $mail)
+                  @foreach ($mails as $mail)
                   <tr>
                     <td>{{ $mail->terima_dari }}</td>
                     <td>{{ $mail->nomor_surat }}</td>
@@ -85,13 +85,7 @@ Disposisi Surat Masuk
                       </a>
                     </td>
                   </tr>
-                  @empty
-                  <tr>
-                    <td colspan="6" class="text-center">
-                      Data Kosong
-                    </td>
-                  </tr>
-                  @endforelse
+                  @endforeach
 								</tbody>
 							</table>
 						</div>
@@ -125,7 +119,7 @@ Disposisi Surat Masuk
 
 <script type="text/javascript">
   $(document).ready(function () {
-    $("#tbl-persetujuan-surat-masuk").DataTable({
+    $("#tbl-disposisi-surat-masuk").DataTable({
 			"lengthChange": true,
       "responsive": true,
       "autoWidth": false,

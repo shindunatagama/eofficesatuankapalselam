@@ -51,7 +51,7 @@ Pemeliharaan Surat Masuk
                   </tr>
 								</thead>
 								<tbody>
-                  @forelse ($users as $user)
+                  @foreach ($users as $user)
                   <tr>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
@@ -82,13 +82,7 @@ Pemeliharaan Surat Masuk
                       </a>
                     </td>
                   </tr>
-                  @empty
-                  <tr>
-                    <td colspan="7" class="text-center">
-                      Data Kosong
-                    </td>
-                  </tr>
-                  @endforelse
+                  @endforeach
 								</tbody>
 							</table>
 						</div>
