@@ -54,7 +54,7 @@ class RegisterController extends Controller
         );
 
         $rules = [
-            'photo' => ['required', 'image', 'max:5'],
+            'photo' => ['nullable', 'image', 'max:5'],
             'name' => ['required', 'max:255'],
             'username' => ['required', 'max:255', 'unique:users'],
             'email' => ['required', 'email', 'max:255', 'unique:users'],
@@ -91,6 +91,8 @@ class RegisterController extends Controller
             $photo = $request->file('photo');
             $filename = Carbon::now()->timestamp . '_' . uniqid() . '.' . $photo->getClientOriginalExtension();
             $filepath = $request->file('photo')->storeAs('assets/user', $filename, 'public');
+        } else {
+            $filepath = 'assets/user/blank-profile-picture-128x128.jpg';
         }
 
         $uuid = Uuid::uuid4()->getHex();
